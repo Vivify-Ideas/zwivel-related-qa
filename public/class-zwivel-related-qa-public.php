@@ -123,6 +123,15 @@ class Zwivel_Related_Qa_Public {
 
 			if ( !empty($response) && is_array($response) ) {
 				$threads = !empty(json_decode($response['body'])) ? json_decode($response['body'])->threads : null;
+
+				foreach ($threads as $thread) {
+                    $thread->top_level_posts = $this->array_remove_object($thread->top_level_posts, $thread->top_rated_post_by_doctor->author_id, 'author_id');
+
+                    usort($thread->top_level_posts, function($a, $b) {
+                        return strcmp($b->score, $a->score);
+                    });
+                }
+
 				$noMatchingTags = !empty(json_decode($response['body'])) ? json_decode($response['body'])->no_matching_tags : null;
 				if (!empty($cacheKeyForThreads)) {
 					set_transient( $cacheKeyForThreads, $threads, DAY_IN_SECONDS );
@@ -136,5 +145,13 @@ class Zwivel_Related_Qa_Public {
 		include 'partials/zwivel-related-qa-public-display.php';
 		return ob_get_clean();
 	}
+
+
+    function array_remove_object(&$array, $value, $prop)
+    {
+        return array_filter($array, function($a) use($value, $prop) {
+            return $a->$prop !== $value;
+        });
+    }
 
 }

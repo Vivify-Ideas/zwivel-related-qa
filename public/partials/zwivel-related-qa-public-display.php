@@ -20,9 +20,48 @@
             <p>Patients ask » Doctors answer</p>
         </div>
 
-        <?php foreach ($threads as $thread ) : ?>
+        <?php foreach ($threads as $key => $thread ) : ?>
             <div class="question_item">
                 <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>"><?php print $thread->title ?></a>
+
+                <?php
+                    // get first item in foreach
+                    reset($threads);
+                    if ($key === key($threads)) :
+                ?>
+                    <div class="first-thread-top-rated-answer">
+                        <div class="first-thread-top-rated-answer-author">
+                            <a href="https://www.zwivel.com/doctor/<?php print $thread->top_rated_post_by_doctor->author->doctor->slug; ?>">
+                                <img src="https://www.zwivel.com/avatar/<?php print $thread->top_rated_post_by_doctor->author->id; ?>" >
+                                <span>Dr. <?php print $thread->top_rated_post_by_doctor->author->full_name ?></span>
+                                <?php if (!empty($thread->top_rated_post_by_doctor->author->doctor->certificates)) : ?>
+                                    <small><?php print implode(', ', array_column($thread->top_rated_post_by_doctor->author->doctor->certificates, 'name')) ?></small>
+                                <?php else : ?>
+                                    <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->city ?>, </small>
+                                    <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->state ?></small>
+                                <?php endif; ?>
+                            </a>
+                        </div>
+                        <div class="first-thread-top-rated-answer-text" data-text="<?php print str_replace('"', "'", strip_tags($thread->top_rated_post_by_doctor->content)); ?>"></div>
+                        <?php if ($thread->post_count > 2) : ?>
+                            <div class="first-thread-top-rated-answer-other-doctors">
+                                <span><?php print $thread->post_count - 1; ?> other doctors replied to this patient's request</span>
+                                <div class="first-thread-top-rated-answer-other-doctors-avatars">
+                                    <?php for ($i = 1; $i < 5; $i++) : ?>
+                                        <img src="https://www.zwivel.com/avatar/<?php print $thread->top_level_posts[$i]->author_id; ?>" >
+                                    <?php endfor; ?>
+                                    <span>+ <?php print count($thread->top_level_posts) - 5 ?></span>
+                                    <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View all</a>
+                                </div>
+                            </div>
+                        <?php elseif ($thread->post_count == 2) : ?>
+                            <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View Answer</a>
+                        <?php else : ?>
+                            <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View Question</a>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+
                 <span><?php print $thread->post_count ?> doctor answers</span>
             </div>
         <?php endforeach; ?>

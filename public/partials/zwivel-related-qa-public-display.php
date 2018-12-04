@@ -31,28 +31,39 @@
                 ?>
                     <div class="first-thread-top-rated-answer">
                         <div class="first-thread-top-rated-answer-author">
-                            <a href="https://www.zwivel.com/doctor/<?php print $thread->top_rated_post_by_doctor->author->doctor->slug; ?>">
-                                <img src="https://www.zwivel.com/avatar/<?php print $thread->top_rated_post_by_doctor->author->id; ?>" >
-                                <span>Dr. <?php print $thread->top_rated_post_by_doctor->author->full_name ?></span>
-                                <?php if (!empty($thread->top_rated_post_by_doctor->author->doctor->certificates)) : ?>
-                                    <small><?php print implode(', ', array_column($thread->top_rated_post_by_doctor->author->doctor->certificates, 'name')) ?></small>
-                                <?php else : ?>
-                                    <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->city ?>, </small>
-                                    <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->state ?></small>
-                                <?php endif; ?>
+                            <a class="media" href="https://www.zwivel.com/doctor/<?php print $thread->top_rated_post_by_doctor->author->doctor->slug; ?>">
+                                <div class="media-object">
+                                    <img src="https://www.zwivel.com/avatar/<?php print $thread->top_rated_post_by_doctor->author->id; ?>" >
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-title">
+                                        Dr. <?php print $thread->top_rated_post_by_doctor->author->full_name ?>
+                                    </h5>
+
+                                    <?php if (!empty($thread->top_rated_post_by_doctor->author->doctor->certificates)) : ?>
+                                        <small><?php print implode(', ', array_column($thread->top_rated_post_by_doctor->author->doctor->certificates, 'name')) ?></small>
+                                    <?php else : ?>
+                                        <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->city ?>, </small>
+                                        <small><?php print $thread->top_rated_post_by_doctor->author->doctor->clinics[0]->state ?></small>
+                                    <?php endif; ?>
+                                </div>
                             </a>
                         </div>
+
                         <div class="first-thread-top-rated-answer-text" data-text="<?php print str_replace('"', "'", strip_tags($thread->top_rated_post_by_doctor->content)); ?>"></div>
                         <?php if ($thread->post_count > 2) : ?>
                             <div class="first-thread-top-rated-answer-other-doctors">
-                                <span><?php print $thread->post_count - 1; ?> other doctors replied to this patient's request</span>
+                                <p>
+                                    <strong><?php print $thread->post_count - 1; ?> other doctors replied to this patient's request</strong>
+                                </p>
+
                                 <div class="first-thread-top-rated-answer-other-doctors-avatars">
                                     <?php for ($i = 1; $i < 5; $i++) : ?>
                                         <img src="https://www.zwivel.com/avatar/<?php print $thread->top_level_posts[$i]->author_id; ?>" >
                                     <?php endfor; ?>
-                                    <span>+ <?php print count($thread->top_level_posts) - 5 ?></span>
-                                    <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View all</a>
+                                    <span class="number-tag">+ <?php print count($thread->top_level_posts) - 4 ?></span>
                                 </div>
+                                <a class="btn btn-primary" href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View all</a>
                             </div>
                         <?php elseif ($thread->post_count == 2) : ?>
                             <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View Answer</a>
@@ -62,7 +73,9 @@
                     </div>
                 <?php endif; ?>
 
-                <span><?php print $thread->post_count ?> doctor answers</span>
+                <?php if ($key !== key($threads)) : ?>
+                    <span><?php print $thread->post_count ?> doctor answers</span>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
 

@@ -25,10 +25,13 @@
                 <a href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>"><?php print $thread->title ?></a>
 
                 <?php
-                    // get first item in foreach
-                    reset($threads);
-                    if ($key === key($threads)) :
-                ?>
+                // 					var_dump($thread->top_rated_post_by_doctor);
+                // 				   die;
+
+                // get first item in foreach
+                reset($threads);
+                if (!empty($thread->top_rated_post_by_doctor) && $key === key($threads)) :
+                    ?>
                     <div class="first-thread-top-rated-answer">
                         <div class="first-thread-top-rated-answer-author">
                             <a class="media" href="https://www.zwivel.com/doctor/<?php print $thread->top_rated_post_by_doctor->author->doctor->slug; ?>">
@@ -73,7 +76,7 @@
                     </div>
                 <?php endif; ?>
 
-                <?php if ($key !== key($threads)) : ?>
+                <?php if ($key !== key($threads) || empty($thread->top_rated_post_by_doctor)) : ?>
                     <span><?php print $thread->post_count ?> doctor answers</span>
                 <?php endif; ?>
             </div>

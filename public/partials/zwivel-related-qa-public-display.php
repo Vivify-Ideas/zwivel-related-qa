@@ -12,7 +12,6 @@
  * @subpackage Zwivel_Related_Qa/public/partials
  */
 ?>
-
 <?php if (!empty($threads)) : ?>
     <div class="patient_questions">
         <div class="patient_questions_header">
@@ -62,9 +61,17 @@
 
                                 <div class="first-thread-top-rated-answer-other-doctors-avatars">
                                     <?php for ($i = 1; $i < 5; $i++) : ?>
-                                        <img src="https://www.zwivel.com/avatar/<?php print $thread->top_level_posts[$i]->author_id; ?>" >
+                                        <?php if (!empty($thread->top_level_posts[$i]->author_id)) : ?>
+                                            <img src="https://www.zwivel.com/avatar/<?php print $thread->top_level_posts[$i]->author_id; ?>" >
+                                        <?php endif; ?>
                                     <?php endfor; ?>
-                                    <span class="number-tag">+ <?php print count($thread->top_level_posts) - 4 ?></span>
+                                    <?php $subtractionValue = 0;
+                                        if (count($thread->top_level_posts[$i]->author_id) > 4) {
+                                            $subtractionValue = 4;
+                                        }
+                                    ?>
+                                        <span class="number-tag">+ <?php print count($thread->top_level_posts) - $subtractionValue ?></span>
+
                                 </div>
                                 <a class="btn btn-primary" href="https://www.zwivel.com/forum/general-discussions/ask-cosmetic-doctor/<?php print $thread->slug ?>">View all</a>
                             </div>

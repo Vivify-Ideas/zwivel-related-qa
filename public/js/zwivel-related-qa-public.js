@@ -33,7 +33,7 @@
     	var textLength = 300;
 		var topRatedAnswerText = $('.first-thread-top-rated-answer-text');
 
-		if (!topRatedAnswerText && !topRatedAnswerText.attr('data-text')) {
+		if (!topRatedAnswerText || !topRatedAnswerText.attr('data-text')) {
             return;
 		}
 
@@ -51,5 +51,5 @@
             });
         }
 	});
-    
+
 })( jQuery );

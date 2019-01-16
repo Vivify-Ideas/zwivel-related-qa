@@ -52,7 +52,7 @@
                             </a>
                         </div>
 
-                        <div class="first-thread-top-rated-answer-text" data-text="<?php print str_replace('"', "'", strip_tags($thread->top_rated_post_by_doctor->content)); ?>"></div>
+                        <div id="first-thread-top-rated-answer-text" class="first-thread-top-rated-answer-text" data-text="<?php print str_replace('"', "'", strip_tags($thread->top_rated_post_by_doctor->content)); ?>"></div>
                         <?php if ($thread->post_count > 2) : ?>
                             <div class="first-thread-top-rated-answer-other-doctors">
                                 <p>

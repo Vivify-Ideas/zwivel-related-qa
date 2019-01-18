@@ -65,8 +65,8 @@
                                             <img src="https://www.zwivel.com/avatar/<?php print $thread->top_level_posts[$i]->author_id; ?>" >
                                         <?php endif; ?>
                                     <?php endfor; ?>
-                                    <?php $subtractionValue = 0;
-                                        if (count($thread->top_level_posts[$i]->author_id) > 4) {
+                                    <?php $subtractionValue = 1;
+                                        if (count($thread->top_level_posts) > 4) {
                                             $subtractionValue = 4;
                                         }
                                     ?>

@@ -30,24 +30,26 @@
 	 */
 
     $(function() {
+    	var textLength = 300;
 		var topRatedAnswerText = $('.first-thread-top-rated-answer-text');
 
-		if (topRatedAnswerText.attr('data-text').length >= 300) {
-            topRatedAnswerText.text(topRatedAnswerText.attr('data-text').substring(0, 300));
+		if (!topRatedAnswerText || !topRatedAnswerText.attr('data-text')) {
+            return;
+		}
+
+        if (topRatedAnswerText.attr('data-text').length >= textLength) {
+            topRatedAnswerText.html(topRatedAnswerText.attr('data-text').substring(0, textLength));
             topRatedAnswerText.append('... <span class="first-thread-top-rated-answer-text-read-more">Read More</span>');
             var readMore = $('.first-thread-top-rated-answer-text-read-more');
-		} else {
-            topRatedAnswerText.text(topRatedAnswerText.attr('data-text'));
-		}
+        } else {
+            topRatedAnswerText.html(topRatedAnswerText.attr('data-text'));
+        }
 
-		if (readMore) {
+        if (readMore) {
             readMore.click(function(e) {
-                topRatedAnswerText.text(topRatedAnswerText.attr('data-text'));
+                topRatedAnswerText.html(topRatedAnswerText.attr('data-text'));
             });
-		}
-
-
+        }
 	});
-
 
 })( jQuery );

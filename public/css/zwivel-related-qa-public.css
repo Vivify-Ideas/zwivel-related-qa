@@ -42,6 +42,11 @@
     border: none;
 }
 
+#first-thread-top-rated-answer-text p span {
+    border: none;
+    font-size: 16px;
+}
+
 .first-thread-top-rated-answer-other-doctors-avatars img {
     position: relative;
     display: inline-block;
